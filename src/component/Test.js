@@ -9,7 +9,7 @@ const Title = styled.div`
 
 const Test = () => {
   const TestClick = () => {
-    alert('하하')
+    alert('하하하')
   }
   return (
     <>
