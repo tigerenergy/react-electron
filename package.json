@@ -16,7 +16,50 @@
   },
   "scripts": {
     "start": "concurrently \"yarn react-scripts start\" \"yarn electron\" ",
-    "build": "react-scripts build",
+    "deploy:osx": "electron-builder --mac",
+    "deploy:win": "npm run deploy:win32 && npm run deploy:win64",
+    "deploy:win32": "electron-builder --win nsis:ia32",
+    "deploy:win64": "electron-builder --win nsis:x64",
+    "build": {
+      "productName": "Start Electron",
+      "appId": "net.jetalab.ex.startelectron",
+      "asar": true,
+      "mac": {
+        "target": [
+          "default"
+        ]
+      },
+      "dmg": {
+        "title": "Start Electron"
+      },
+      "win": {
+        "target": [
+          {
+            "target": "nsis",
+            "arch": [
+              "x64",
+              "ia32"
+            ]
+          }
+        ]
+      },
+      "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": false,
+        "createDesktopShortcut": true
+      },
+      "directories": {
+        "buildResources": "./resources/installer/",
+        "output": "./dist/",
+        "app": "."
+      }
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "electron": "^15.3.0",
+      "electron-builder": "^23.6.0"
+    },
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "wait-on http://localhost:3000 && electron ."
@@ -43,6 +86,7 @@
     "autoprefixer": "^10.4.13",
     "concurrently": "^6.3.0",
     "electron": "^15.3.0",
+    "electron-builder": "^23.6.0",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
     "wait-on": "^6.0.0"
